@@ -4,21 +4,26 @@ import imutils
 faceCascade = cv2.CascadeClassifier("face.xml")
 
 cap = cv2.VideoCapture(0)
+screenName = 'Camera'
+cv2.namedWindow(screenName, cv2.WINDOW_NORMAL);
 while True:
-    zartZurt, colorfulSCreen = cap.read()
-    colorfulSCreen = imutils.resize(colorfulSCreen, width=1500, height=120)
-    colorfulSCreen = imutils.rotate(colorfulSCreen, angle=0)
-    grayScreen = cv2.cvtColor(colorfulSCreen, cv2.COLOR_BGR2GRAY)
+    zartZurt, colorfulScreen = cap.read()
+    colorfulScreen = imutils.resize(colorfulScreen, width=1500, height=120)
+    colorfulScreen = imutils.rotate(colorfulScreen, angle=0)
+    grayScreen = cv2.cvtColor(colorfulScreen, cv2.COLOR_BGR2GRAY)
 
     casc = faceCascade.detectMultiScale(grayScreen, 1.3, 2)
-    for (x,y,w,h) in casc:
-        cv2.rectangle(colorfulSCreen,(x+5,y+5),(x+w-5,y+h-5),(0,255,0),2)
+    for (x, y, w, h) in casc:
+        cv2.rectangle(colorfulScreen, (x + 5, y + 5), (x + w - 5, y + h - 5), (0, 255, 0), 2)
 
-    cv2.imshow('Camera', colorfulSCreen)
-    if cv2.waitKey(1) & 0xFF == ord('x'):#press x for quit
-            break
+    cv2.imshow(screenName, colorfulScreen)
+    key = cv2.waitKey(1)
+    if key == ord('x'):  # press x for quit
+        print("Gidiyorsun demek ")
+        break
+    if key == ord('f'):
+        print("TAM EKRAN ")
+        cv2.setWindowProperty(screenName, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
 
 cap.release()
 cv2.destroyAllWindows()
-
-
